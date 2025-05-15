@@ -38,13 +38,15 @@ jobs:
             fi
 
             cd ~/pincheck
+
             echo "Setting AWS credentials..."
+            echo "AWS_ACCESS_KEY_ID is: $AWS_ACCESS_KEY_ID"
+            echo "AWS_SECRET_ACCESS_KEY length: ${#AWS_SECRET_ACCESS_KEY}"
+            echo "AWS_REGION is: $AWS_REGION"
+
             mkdir -p ~/.aws
-            echo "[default]" > ~/.aws/credentials
-            echo "aws_access_key_id=$AWS_ACCESS_KEY_ID" >> ~/.aws/credentials
-            echo "aws_secret_access_key=$AWS_SECRET_ACCESS_KEY" >> ~/.aws/credentials
-            echo "[default]" > ~/.aws/config
-            echo "region=$AWS_REGION" >> ~/.aws/config
+            printf "[default]\n  aws_access_key_id=%s\n  aws_secret_access_key=%s\n" "$AWS_ACCESS_KEY_ID" "$AWS_SECRET_ACCESS_KEY" > ~/.aws/credentials
+            printf "[default]\n  region=%s\n" "$AWS_REGION" > ~/.aws/config
 
             docker-compose -f docker-compose.prod.yml down
             docker-compose -f docker-compose.prod.yml up --build -d
