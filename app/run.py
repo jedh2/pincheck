@@ -11,7 +11,7 @@ setup_logging()
 
 @app.route('/')
 def index():
-    print("📥 GET / accessed")
+    app.logger.info("📥 GET / accessed")
     return render_template('upload.html')
 
 @app.route('/predict', methods=['POST'])
@@ -35,11 +35,9 @@ def predict():
 
     except Exception as e:
         import traceback
-        import sys
-        print("🔥 Exception in /predict route:")
-        traceback.print_exc(file=sys.stdout)
-        sys.stdout.flush()
-        return jsonify({"error": "Internal Server Error"}), 500
+        app.logger.error("🔥 Exception in /predict route:")
+        app.logger.error(traceback.format_exc())
+    return jsonify({"error": "Internal Server Error"}), 500
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000)
