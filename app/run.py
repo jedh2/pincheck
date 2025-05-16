@@ -5,7 +5,6 @@ import os
 import traceback
 import sys
 
-
 app = Flask(__name__, static_folder='app/static', template_folder='app/templates')
 setup_logging()
 
@@ -37,7 +36,7 @@ def predict():
         import traceback
         app.logger.error("🔥 Exception in /predict route:")
         app.logger.error(traceback.format_exc())
-    return jsonify({"error": "Internal Server Error"}), 500
+        return jsonify({"error": "Internal Server Error"}), 500
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000)
