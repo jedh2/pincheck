@@ -11,6 +11,9 @@ services:
 			- ./app:/app
 		environment:
 			- FLASK_ENV=production
+			- AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+			- AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+			- AWS_REGION=${AWS_REGION}
 
 	nginx:
 		image: nginx:latest
