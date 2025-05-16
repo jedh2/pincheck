@@ -5,11 +5,13 @@ import os
 import traceback
 import sys
 
+
 app = Flask(__name__, static_folder='app/static', template_folder='app/templates')
 setup_logging()
 
 @app.route('/')
 def index():
+    print("📥 GET / accessed")
     return render_template('upload.html')
 
 @app.route('/predict', methods=['POST'])
@@ -20,20 +22,24 @@ def predict():
 
         results = {}
         if front_file:
-            label, _ = predict_image(front_file, side="front")
-            results['front'] = label
+            label, gradcam_url = predict_image(front_file, side="front")
+            results['front_prediction'] = label
+            results['front_gradcam'] = gradcam_url
 
         if back_file:
-            label, _ = predict_image(back_file, side="back")
-            results['back'] = label
+            label, gradcam_url = predict_image(back_file, side="back")
+            results['back_prediction'] = label
+            results['back_gradcam'] = gradcam_url
 
-        return render_template("upload.html", result=results)
+        return jsonify(results)
 
     except Exception as e:
-        print(f"🔥 Error in /predict: {e}")
+        import traceback
+        import sys
+        print("🔥 Exception in /predict route:")
         traceback.print_exc(file=sys.stdout)
         sys.stdout.flush()
-        return render_template("upload.html", result={"error": "Internal Server Error"}), 500
+        return jsonify({"error": "Internal Server Error"}), 500
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000)
