@@ -1,13 +1,11 @@
-# docker-compose.prod.ymp for EC2 production with HTTPS
+# docker-compose.prod.yml for EC2 production with HTTPS
 services:
   app:
     build: .
-    container_name: pincheck_app
+    container_name: app
     restart: always
     expose:
       - "5000"
-    volumes:
-      - ./app:/app
     environment:
       - FLASK_ENV=production
       - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
