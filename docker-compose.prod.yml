@@ -1,5 +1,4 @@
 # docker-compose.prod.ymp for EC2 production with HTTPS
-version: '3.8'
 services:
   app:
     build: .
