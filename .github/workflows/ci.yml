@@ -47,7 +47,7 @@ jobs:
             echo "AWS_REGION is: $AWS_REGION"
 
             mkdir -p ~/.aws
-            echo -e "[default]\\naws_access_key_id=$AWS_ACCESS_KEY_ID\\naws_secret_access_key=$AWS_SECRET_ACCESS_KEY" > ~/.aws/credentials"
+            echo -e "[default]\\naws_access_key_id=$AWS_ACCESS_KEY_ID\\naws_secret_access_key=$AWS_SECRET_ACCESS_KEY" > ~/.aws/credentials
             echo -e "[default]\\nregion=$AWS_REGION" > ~/.aws/config
 
             docker-compose -f docker-compose.prod.yml down
