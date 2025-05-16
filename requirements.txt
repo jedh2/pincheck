@@ -4,5 +4,5 @@ torchvision
 boto3
 Pillow
 gunicorn
-cv2
+opencv-python
 numpy
