@@ -2,6 +2,8 @@ from flask import Flask, request, render_template, jsonify
 from app.inference import predict_image
 from app.utils import setup_logging
 import os
+import traceback
+import sys
 
 app = Flask(__name__, static_folder='app/static', template_folder='app/templates')
 setup_logging()
@@ -29,6 +31,8 @@ def predict():
 
     except Exception as e:
         print(f"🔥 Error in /predict: {e}")
+        traceback.print_exc(file=sys.stdout)
+        sys.stdout.flush()
         return render_template("upload.html", result={"error": "Internal Server Error"}), 500
 
 if __name__ == '__main__':
