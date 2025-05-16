@@ -1,8 +1,9 @@
 flask
-torch
-torchvision
+torch==2.2.2+cpu
+torchvision==0.17.2+cpu
+--extra-index-url https://download.pytorch.org/whl/cpu
 boto3
 Pillow
 gunicorn
-opencv-python
+opencv-python-headless
 numpy
