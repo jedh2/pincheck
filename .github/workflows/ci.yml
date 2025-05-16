@@ -41,22 +41,8 @@ jobs:
 
             cd ~/pincheck
 
-            echo "Setting AWS credentials..."
-            echo "AWS_ACCESS_KEY_ID is: $AWS_ACCESS_KEY_ID"
-            echo "AWS_SECRET_ACCESS_KEY length: ${#AWS_SECRET_ACCESS_KEY}"
-            echo "AWS_REGION is: $AWS_REGION"
+            echo "Starting app with AWS credentials in environment..."
 
-            mkdir -p ~/.aws
-            cat <<EOF > ~/.aws/credentials
-            [default]
-            aws_access_key_id=$AWS_ACCESS_KEY_ID
-            aws_secret_access_key=$AWS_SECRET_ACCESS_KEY
-            EOF
+            AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID             AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY             AWS_REGION=$AWS_REGION             docker-compose -f docker-compose.prod.yml down
 
-            cat <<EOF > ~/.aws/config
-            [default]
-            region=$AWS_REGION
-            EOF
-
-            docker-compose -f docker-compose.prod.yml down
-            docker-compose -f docker-compose.prod.yml up --build -d
+            AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID             AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY             AWS_REGION=$AWS_REGION             docker-compose -f docker-compose.prod.yml up --build -d
