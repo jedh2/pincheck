@@ -12,19 +12,24 @@ def index():
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    front_file = request.files.get('front')
-    back_file = request.files.get('back')
-    results = {}
+    try:
+        front_file = request.files.get("front")
+        back_file = request.files.get("back")
 
-    if front_file:
-        results['front_prediction'], results['front_gradcam'] = predict_image(front_file, side='front')
-    if back_file:
-        results['back_prediction'], results['back_gradcam'] = predict_image(back_file, side='back')
+        results = {}
+        if front_file:
+            label, _ = predict_image(front_file, side="front")
+            results['front'] = label
 
-    if not results:
-        return jsonify({'error': 'No image uploaded'}), 400
+        if back_file:
+            label, _ = predict_image(back_file, side="back")
+            results['back'] = label
 
-    return jsonify(results)
+        return render_template("upload.html", result=results)
+
+    except Exception as e:
+        print(f"🔥 Error in /predict: {e}")
+        return render_template("upload.html", result={"error": "Internal Server Error"}), 500
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host="0.0.0.0", port=5000)
