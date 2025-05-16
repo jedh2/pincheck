@@ -1,6 +1,5 @@
 flask
 torch
-torchvision
 boto3
 Pillow
 gunicorn
