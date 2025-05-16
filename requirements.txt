@@ -6,4 +6,4 @@ boto3
 Pillow
 gunicorn
 opencv-python-headless
-numpy
+numpy<2
